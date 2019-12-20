@@ -2,21 +2,45 @@ package ticTacToe;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Game {
 	static String[][] board;
+	static Player winner;
+	static Player currentPlayer;
 	
 	Game() {
 		buildBoard();
 	}	
 	
 	public static void startGame() {
+		Scanner sc = new Scanner(System.in);
+		
+		Player player1 = new Player("Toto", PlayerSymbole.O);
+		Player player2 = new Player("Titi", PlayerSymbole.X);
+		
 		System.out.println("");
 		System.out.println("Really starting the game now :");
 		System.out.println("");
 		
+		
 		printBoard();
+		currentPlayer = player1;
+		
+		while (winner == null) {
+			System.out.println("On what line do you want to play (between 1 and 3 included) :");
+			int playerLine = sc.nextInt();
+			System.out.println("You and to play on line " + playerLine + ".");
+			System.out.println("On what column do you want to play (A, B or C) :");
+			String playerColumn = sc.next().substring(0, 1);
+			System.out.println("You and to play on column " + playerColumn + ".");
+			
+			updateBoard(currentPlayer.symbole, playerLine, playerColumn);
+			
+			currentPlayer = currentPlayer == player1 ? player2 : player1;
+			winner = player1;
+		}
 	}
 	
 	public static void printBoard() {
@@ -29,7 +53,7 @@ public class Game {
 		}
 	}
 	
-	public static void updateBoard(PlayerSymbole symbol, int line, String column) {
+	public static void updateBoard(PlayerSymbole symbole, int line, String column) {
 		int columnIndex;
 		
 		switch(column) {
@@ -54,7 +78,11 @@ public class Game {
 			return;
 		}
 		
+		board[line][columnIndex] = symbole.toString();
 		
+		System.out.println("Played !");
+		System.out.println("The board is now :");
+		printBoard();
 		
 	}
 	
