@@ -1,12 +1,16 @@
 package ticTacToe;
 
 public enum PlayerSymbole {
-	O ("O"),
-	X ("X");
+	O ('O'),
+	X ('X');
 	
-	String value;
+	private char value;
+	
+	public char asChar() {
+		return value;
+	}
 
-	PlayerSymbole(String value) {
-        this.value = value;
+	PlayerSymbole(char playerValue) {
+        value = playerValue;
     }
 }
