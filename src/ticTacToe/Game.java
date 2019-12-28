@@ -36,24 +36,46 @@ public class Game {
 		}
 	}
 	
+	public static void buildBoard() {
+		char[][] newBoard = {
+			{' ', ' ', 'A', ' ', 'B', ' ', 'C'},
+			{'1', ' ', '_', ' ', '_', ' ', '_'},
+			{'2', ' ', '_', ' ', '_', ' ', '_'},
+			{'3', ' ', '_', ' ', '_', ' ', '_'}
+		};
+		board = newBoard;
+	}
+	
+	
 	public static void printBoard() {
-		if (board != null) {		
+		if (board != null) {
+			System.out.println("");
 			for (char[] line : board) {
 				System.out.println(String.valueOf(line));
 			}
+			System.out.println("");
 		}
 	}
 	
 	public static void playerTurn() {
 		Scanner sc = new Scanner(System.in);
+		int playerLine;
+		char playerColumn;
 		
 		System.out.println("On what line do you want to play (between 1 and 3 included) :");
-		int playerLine = sc.nextInt();
-		System.out.println("You want to play on line " + playerLine + ".");
-		System.out.println("On what column do you want to play (A, B or C) :");
-		char playerColumn = sc.next().charAt(0);
-		System.out.println("You want to play on column " + playerColumn + ".");
+		try {
+			playerLine = sc.nextInt();
+		} catch(Exception error) {
+			System.out.println("Bad number...enter a number between 1 and 3.");
+			playerTurn();
+			return;
+		}
 		
+		System.out.println("You want to play on line " + playerLine + ".");
+		
+		System.out.println("On what column do you want to play (A, B or C) :");
+		playerColumn = sc.next().charAt(0);
+		System.out.println("You want to play on column " + playerColumn + ".");
 		
 		updateBoard(currentPlayer.symbole, playerLine, playerColumn);
 	}
@@ -72,15 +94,19 @@ public class Game {
 				columnIndex = 6;
 				break;
 			default:
+				System.out.println("");
 				System.out.println("Bad column name...");
 				System.out.println("Enter A, B or C.");
+				System.out.println("");
 				playerTurn();
 				return;
 		}
 		
-		if (line < 0 || line > 3) {
+		if (line < 0 && line > 3) {
+			System.out.println("");
 			System.out.println("Bad line number...");
 			System.out.println("Enter a number between 1 and 3 included.");
+			System.out.println("");
 			playerTurn();
 			return;
 		}
@@ -95,16 +121,10 @@ public class Game {
 		
 		board[line][columnIndex] = symbole.asChar();
 		
-		System.out.println("Played !");
+		System.out.println("");
 		System.out.println("The board is now :");
 		printBoard();
 		
 	}
-	
-	public static void buildBoard() {
-		char[][] newBoard = {{' ', ' ', 'A', ' ', 'B', ' ', 'C'}, {'1', ' ', '_', ' ', '_', ' ', '_'}, {'2', ' ', '_', ' ', '_', ' ', '_'}, {'3', ' ', '_', ' ', '_', ' ', '_'}};
-		board = newBoard;
-	}
-	
 	
 }
